@@ -1,0 +1,26 @@
+name: Commit check
+
+on: [push, pull_request]
+
+jobs:
+   build:
+      runs-on: ubuntu-latest
+      steps:
+
+      - name: Checkout repo
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          
+      - name: Get changed C/C++ files
+        id: changed-files-specific
+        uses: tj-actions/changed-files@v11.9
+        with:
+           files:
+            \.(c|cpp|cxx|h|hpp|hxx)$
+            
+      - name: Process all modified source files
+        run: |
+          for file in ${{ steps.changed-files-specific.outputs.all_modified_files }}; do
+            echo "$file was modified"
+          done
