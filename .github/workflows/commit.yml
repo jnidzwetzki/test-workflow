@@ -23,6 +23,7 @@ jobs:
               **.h
               **.hpp
               **.hxx
+              *.txt
             
       - name: Process all modified source files
         run: |
