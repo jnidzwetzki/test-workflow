@@ -1,4 +1,4 @@
-name: Remove labels
+name: Manage the bug board
 on:
   project_card:
     types:
