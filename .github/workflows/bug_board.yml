@@ -1,0 +1,32 @@
+name: Remove labels
+on:
+  project_card:
+    types:
+      - moved
+      
+jobs:
+  remove_labels:
+    if: github.event.project_card.column_id == '47fc9ee4'
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - name: remove labels
+        uses: andymckay/labeler@5c59dabdfd4dd5bd9c6e6d255b01b9d764af4414
+        with:
+          add-labels: "need-more-info"
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+
+  add_labels:
+    if: github.event.project_card.column_id == '98236657'
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - name: remove labels
+        uses: andymckay/labeler@5c59dabdfd4dd5bd9c6e6d255b01b9d764af4414
+        with:
+          remove-labels: "need-more-info"
+          repo-token: ${{ secrets.GITHUB_TOKEN }}     
+          
+    
