@@ -9,6 +9,7 @@ on:
 jobs:
   waiting-for-engineer:
     name: Waiting for Engineer
+    runs-on: ubuntu-latest
     if: github.event_name == 'issue_comment' && !github.event.issue.pull_request && contains(github.event.issue.labels.*.name, 'need-more-info')
     steps:
       - name: remove need-more-info label
