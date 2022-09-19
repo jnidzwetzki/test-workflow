@@ -11,7 +11,7 @@ jobs:
     name: Waiting for Engineer
     runs-on: ubuntu-latest
     run: |
-        sudo coredumpctl gdb <<EOT
+        sudo echo <<EOT
           printf "%s", debug_query_string
           bt full
-EOT
+        EOT
