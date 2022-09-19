@@ -18,5 +18,7 @@ jobs:
         gdb <<EOT
           printf "%s", debug_query_string
           bt full
+          print
+          print
         EOT
         echo "Test 2"
