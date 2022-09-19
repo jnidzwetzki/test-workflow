@@ -21,4 +21,12 @@ jobs:
           print
           print
         EOT
+        if true; then
+          gdb <<EOT
+            printf "%s", debug_query_string
+            bt full
+            print
+            print
+          EOT
+        fi
         echo "Test 2"
