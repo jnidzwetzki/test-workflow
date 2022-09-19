@@ -22,11 +22,13 @@ jobs:
           print
         EOT
         if true; then
-          gdb <<EOT
-            printf "%s", debug_query_string
-            bt full
-            print
-            print
-          EOT
+          if true; then
+            gdb <<EOT
+              printf "%s", debug_query_string
+              bt full
+              print
+              print
+        EOT
+          fi
         fi
         echo "Test 2"
