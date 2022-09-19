@@ -13,7 +13,7 @@ jobs:
     - name: Waiting for Engineer
       run: |
         echo "Test 1"
-        echo <<EOT
+        echo <<-EOT
           printf "%s", debug_query_string
           bt full
         EOT
