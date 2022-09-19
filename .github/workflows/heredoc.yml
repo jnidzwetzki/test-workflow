@@ -8,9 +8,10 @@ on:
     
 jobs:
   waiting-for-engineer:
-    name: Waiting for Engineer
-    runs-on: ubuntu-latest
-    run: |
+    steps:
+    - name: Waiting for Engineer
+     runs-on: ubuntu-latest
+      run: |
         sudo echo <<EOT
           printf "%s", debug_query_string
           bt full
