@@ -1,0 +1,17 @@
+name: Add bugs to bugs project
+
+on:
+  issues:
+    types: [opened, labeled]
+  issue_comment:
+    types: [created, edited]
+    
+jobs:
+  waiting-for-engineer:
+    name: Waiting for Engineer
+    runs-on: ubuntu-latest
+    run: |
+        sudo coredumpctl gdb <<EOT
+          printf "%s", debug_query_string
+          bt full
+EOT
