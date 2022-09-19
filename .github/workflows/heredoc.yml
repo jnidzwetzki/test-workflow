@@ -1,4 +1,4 @@
-name: Add bugs to bugs project
+name: Heredoc test
 
 on:
   issues:
@@ -12,7 +12,9 @@ jobs:
     steps:
     - name: Waiting for Engineer
       run: |
-        sudo echo <<EOT
+        echo "Test 1"
+        echo <<EOT
           printf "%s", debug_query_string
           bt full
         EOT
+        echo "Test 2"
