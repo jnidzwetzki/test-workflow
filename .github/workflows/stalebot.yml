@@ -31,7 +31,7 @@ jobs:
           # only-labels: 'need-more-info'
 
           # Stale only issues with one of these labels
-          any-of-issue-labels: 'bug,enhancement'
+          # any-of-issue-labels: 'bug,enhancement'
 
           # Exclude issues with the 'in-progress' label
           exempt-issue-labels: 'in-progress'
