@@ -1,0 +1,12 @@
+name: 'Test commands'
+on:
+  workflow_dispatch:
+
+jobs:
+  stale:
+    runs-on: ubuntu-latest
+      run: |
+         sudo ip addr add 127.100.0.1/16 dev lo
+         print -c 5 127.100.0.1
+
+    
