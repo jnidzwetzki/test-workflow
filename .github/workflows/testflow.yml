@@ -8,11 +8,13 @@ jobs:
     steps:
       - name: Configure interfaces
         run: |
+           sudo ip link list | grep mtu
+           sudo ip link set dev lo mtu 1500
+           sudo ip link list | grep mtu
            sudo ip addr show
            sudo ip addr add 127.100.0.1/16 dev lo
            sudo ip addr show
            ping -c 10 127.100.0.1
-           sudo tc qdisc del dev lo root
            sudo tc qdisc add dev lo root handle 1: htb
            sudo tc class add dev lo parent 1: classid 1:100 htb rate 1gbit
            sudo tc filter add dev lo protocol ip parent 1:0 prio 1 u32 match ip dst 127.100.0.0/16 match ip src 127.100.0.0/16 flowid 1:100
