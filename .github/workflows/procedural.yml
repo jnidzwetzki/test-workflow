@@ -5,15 +5,43 @@ on:
     types: [opened, labeled]
   issue_comment:
     types: [created, edited]
-    
+
 jobs:
-  waiting-for-engineer:
-    name: Waiting for Engineer
+  add-to-project:
+    name: Add issue to project
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/add-to-project@v0.1.0
+        with:
+          project-url: https://github.com/orgs/timescale/projects/55
+          github-token: ${{ secrets.ORG_AUTOMATION_TOKEN }}
+          labeled: bug, needs-triage
+          label-operator: OR
+
+  waiting-for-author:
+    name: Waiting for Author
+    runs-on: ubuntu-latest
+    if: github.event_name == 'issues' && github.event.action == 'labeled' && github.event.label.name == 'need-more-info'
+    steps:
+      - uses: alex-page/github-project-automation-plus@v0.8.1
+        with:
+          project: Database - TimescaleDB Bugs Board
+          column: Waiting for Author
+          repo-token: ${{ secrets.ORG_AUTOMATION_TOKEN }}
+
+  waiting-for-engineering:
+    name: Waiting for Engineering
     runs-on: ubuntu-latest
     if: github.event_name == 'issue_comment' && !github.event.issue.pull_request && contains(github.event.issue.labels.*.name, 'need-more-info')
     steps:
-      - name: remove need-more-info label
+      - name: Remove need-more-info label
         uses: andymckay/labeler@3a4296e9dcdf9576b0456050db78cfd34853f260
         with:
           remove-labels: 'need-more-info'
           repo-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Move to waiting for engineering column
+        uses: alex-page/github-project-automation-plus@v0.8.1
+        with:
+          project: Database - TimescaleDB Bugs Board
+          column: Waiting for Engineering
+          repo-token: ${{ secrets.ORG_AUTOMATION_TOKEN }}
