@@ -18,6 +18,12 @@ jobs:
           labeled: bug, needs-triage
           label-operator: OR
 
+  debug:
+    name: Debug output
+    runs-on: ubuntu-latest
+    steps:
+      - uses: hmarr/debug-action@v2
+
   waiting-for-author:
     name: Waiting for Author
     runs-on: ubuntu-latest
