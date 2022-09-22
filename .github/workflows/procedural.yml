@@ -29,11 +29,14 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event_name == 'issues' && github.event.action == 'labeled' && github.event.label.name == 'need-more-info'
     steps:
-      - uses: alex-page/github-project-automation-plus@v0.8.1
+      - uses: leonsteinhaeuser/project-beta-automations@v2.0.0
         with:
-          project: Database - TimescaleDB Bugs Board
-          column: Waiting for Author
-          repo-token: ${{ secrets.ORG_AUTOMATION_TOKEN }}
+          gh_token: ${{ secrets.ORG_AUTOMATION_TOKEN }}
+          user: jnidzwetzki
+          # organization: sample-org
+          project_id: 2
+          resource_node_id: ${{ github.event.issue.node_id }}
+          status_value: 'Waiting for Author'
 
   waiting-for-engineering:
     name: Waiting for Engineering
