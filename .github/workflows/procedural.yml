@@ -7,16 +7,16 @@ on:
     types: [created, edited]
 
 jobs:
-  add-to-project:
-    name: Add issue to project
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/add-to-project@v0.1.0
-        with:
-          project-url: https://github.com/users/jnidzwetzki/projects/2
-          github-token: ${{ secrets.ORG_AUTOMATION_TOKEN }}
-          labeled: bug, needs-triage
-          label-operator: OR
+#  add-to-project:
+#    name: Add issue to project
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/add-to-project@v0.1.0
+#        with:
+#          project-url: https://github.com/users/jnidzwetzki/projects/2
+#          github-token: ${{ secrets.ORG_AUTOMATION_TOKEN }}
+#          labeled: bug, needs-triage
+#          label-operator: OR
 
   debug:
     name: Debug output
@@ -50,7 +50,8 @@ jobs:
           organization: timescale
           username: ${{ github.actor }}
           token: ${{ secrets.GITHUB_TOKEN }}
-          
+      - name: Debug output
+        uses: hmarr/debug-action@v2
       - name: Remove need-more-info label
         if: steps.is_organization_member.outputs.result == false
         uses: andymckay/labeler@3a4296e9dcdf9576b0456050db78cfd34853f260
