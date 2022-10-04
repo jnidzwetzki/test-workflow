@@ -50,7 +50,7 @@ jobs:
          username: ${{ github.actor }}
          organization: bboxdb
          team: 'test-team'
-         GITHUB_TOKEN: ${{ secrets.PAT }}
+         GITHUB_TOKEN: ${{ secrets.ORG_AUTOMATION_TOKEN }}
       - name: Debug output
         uses: hmarr/debug-action@v2
       - name: Remove need-more-info label
