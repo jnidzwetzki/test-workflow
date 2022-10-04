@@ -48,7 +48,7 @@ jobs:
         uses: jamessingleton/is-organization-member@1.0.1
         with:
           organization: timescale
-          username: ${{ env.GITHUB_ACTOR }}
+          username: ${{ GITHUB_ACTOR }}
           token: ${{ secrets.GITHUB_TOKEN }}
           
       - name: Remove need-more-info label
