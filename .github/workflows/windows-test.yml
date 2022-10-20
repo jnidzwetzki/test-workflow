@@ -1,4 +1,4 @@
-name: Regression Windows
+name: Windows test
 on:
   workflow_dispatch:
   
@@ -7,6 +7,9 @@ jobs:
     runs-on: windows-2022
     
     steps:
+    - name: Setup WSL
+      uses: Vampire/setup-wsl@v1
+
     - name: Test1
       shell: wsl-bash {0}
       run: |
