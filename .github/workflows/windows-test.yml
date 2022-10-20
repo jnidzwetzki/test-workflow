@@ -10,7 +10,7 @@ jobs:
     - name: Setup WSL
       uses: Vampire/setup-wsl@v1
          
-   - name: Create file
+    - name: Create file
       shell: wsl-bash {0}
       run: |
          touch regression.log
