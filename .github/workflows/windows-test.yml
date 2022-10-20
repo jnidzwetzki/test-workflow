@@ -16,6 +16,7 @@ jobs:
         OUTPUT: put
       run: |
          export
+         echo ${{ env.GITHUB_OUTPUT }}
          echo "foo=bar" >> $GITHUB_OUTPUT
          
     - name: Test2
