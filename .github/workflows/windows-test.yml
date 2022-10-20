@@ -15,7 +15,7 @@ jobs:
       id: collectlogs
       run: |
          if (Test-Path -Path regression.log) {
-            echo "regression_diff=true >> ${env:GITHUB_OUTPUT}
+            echo "regression_diff=true" >> ${env:GITHUB_OUTPUT}
          }
          
     - name: Save regression diffs
