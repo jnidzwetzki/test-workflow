@@ -12,6 +12,8 @@ jobs:
 
     - name: Test1
       shell: wsl-bash {0}
+      env:
+        OUTPUT: put
       run: |
          export
          echo "foo=bar" >> $GITHUB_OUTPUT
