@@ -13,6 +13,7 @@ jobs:
     - name: Test1
       shell: wsl-bash {0}
       run: |
+         export
          echo "foo=bar" >> $GITHUB_OUTPUT
          
     - name: Test2
