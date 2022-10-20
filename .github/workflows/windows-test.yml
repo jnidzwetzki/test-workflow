@@ -1,0 +1,18 @@
+name: Regression Windows
+on:
+  workflow_dispatch:
+  
+jobs:
+  build:
+    os: [ windows-2022 ]
+    
+    - name: Test1
+      shell: wsl-bash {0}
+      run: |
+         echo "foo=bar" >> $GITHUB_OUTPUT
+         
+    - name: Test2
+      shell: wsl-bash {0}
+      run: |
+         echo $foo
+         
