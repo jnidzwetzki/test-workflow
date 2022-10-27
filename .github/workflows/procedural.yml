@@ -18,12 +18,6 @@ jobs:
 #          labeled: bug, needs-triage
 #          label-operator: OR
 
-  debug:
-    name: Debug output
-    runs-on: ubuntu-latest
-    steps:
-      - uses: hmarr/debug-action@v2
-
   waiting-for-author:
     name: Waiting for Author
     runs-on: ubuntu-latest
@@ -57,15 +51,15 @@ jobs:
         if: ${{ steps.checkUserMember.outputs.isTeamMember == 'false' }}
         uses: andymckay/labeler@3a4296e9dcdf9576b0456050db78cfd34853f260
         with:
-          remove-labels: 'need-more-info'
+          remove-labels: 'need-more-info, no-activity'
           repo-token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Move to waiting for engineering column
-        if: ${{ steps.checkUserMember.outputs.isTeamMember == 'false' }}
-        uses: leonsteinhaeuser/project-beta-automations@v2.0.0
-        with:
-          gh_token: ${{ secrets.ORG_AUTOMATION_TOKEN }}
-          user: jnidzwetzki
-          # organization: sample-org
-          project_id: 2
-          resource_node_id: ${{ github.event.issue.node_id }}
-          status_value: 'Waiting for Engineering'
+#      - name: Move to waiting for engineering column
+#        if: ${{ steps.checkUserMember.outputs.isTeamMember == 'false' }}
+#        uses: leonsteinhaeuser/project-beta-automations@v2.0.0
+#        with:
+#          gh_token: ${{ secrets.ORG_AUTOMATION_TOKEN }}
+#          user: jnidzwetzki
+#          # organization: sample-org
+#          project_id: 2
+#          resource_node_id: ${{ github.event.issue.node_id }}
+#          status_value: 'Waiting for Engineering'
