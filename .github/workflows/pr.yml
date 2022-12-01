@@ -1,9 +1,26 @@
+name: Assign PRs
 on: 
   pull_request_target:
     types: [ opened, reopened ]
-    
 jobs:
-  assign-author:
+  assign-pr:
+    name: Assign PR to author
     runs-on: ubuntu-latest
     steps:
       - uses: toshimaru/auto-author-assign@v1.6.0
+
+  ask-review:
+    name: Run pull-review
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run pull-review with docker
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            OWNER: ${{ github.repository_owner }}
+            REPO: ${{ github.event.repository.name }}
+            PULL_REQUEST_NUMBER : ${{ github.event.pull_request.number }}
+        shell: bash
+        run: |
+          PR_URL="https://github.com/${OWNER}/${REPO}/pull/${PULL_REQUEST_NUMBER}"
+          bash scripts/pull-review.sh "${GITHUB_TOKEN}" "${PR_URL}"
