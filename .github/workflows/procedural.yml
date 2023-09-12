@@ -21,7 +21,7 @@ jobs:
   waiting-for-author:
     name: Waiting for Author
     runs-on: ubuntu-latest
-    if: github.event_name == 'issues' && github.event.action == 'labeled' && github.event.label.name == 'need-more-info'
+    if: github.event_name == 'issues' && github.event.action == 'labeled' && github.event.label.name == 'waiting-for-author'
     steps:
       - uses: leonsteinhaeuser/project-beta-automations@v2.0.0
         with:
@@ -31,35 +31,31 @@ jobs:
           project_id: 2
           resource_node_id: ${{ github.event.issue.node_id }}
           status_value: 'Waiting for Author'
-
   waiting-for-engineering:
     name: Waiting for Engineering
     runs-on: ubuntu-latest
- #   if: github.event_name == 'issue_comment' && !github.event.issue.pull_request && contains(github.event.issue.labels.*.name, 'need-more-info')
+    if: github.event_name == 'issue_comment' && !github.event.issue.pull_request
+      && contains(github.event.issue.labels.*.name, 'waiting-for-author')
     steps:
       - name: Check if organization member
-        uses: tspascoal/get-user-teams-membership@v1
+        uses: tspascoal/get-user-teams-membership@v2
         id: checkUserMember
         with:
          username: ${{ github.actor }}
-         organization: bboxdb
-         team: 'test-team'
+         organization: timescale
+         team: 'database-eng'
          GITHUB_TOKEN: ${{ secrets.ORG_AUTOMATION_TOKEN }}
-      - name: Debug output
-        uses: hmarr/debug-action@v2
-      - name: Remove need-more-info label
-#       if: ${{ steps.checkUserMember.outputs.isTeamMember == 'false' }}
+      - name: Remove waiting-for-author label
+        if: ${{ steps.checkUserMember.outputs.isTeamMember == 'false' }}
         uses: andymckay/labeler@3a4296e9dcdf9576b0456050db78cfd34853f260
         with:
-          remove-labels: 'need-more-info, no-activity'
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-#      - name: Move to waiting for engineering column
-#        if: ${{ steps.checkUserMember.outputs.isTeamMember == 'false' }}
-#        uses: leonsteinhaeuser/project-beta-automations@v2.0.0
-#        with:
-#          gh_token: ${{ secrets.ORG_AUTOMATION_TOKEN }}
-#          user: jnidzwetzki
-#          # organization: sample-org
-#          project_id: 2
-#          resource_node_id: ${{ github.event.issue.node_id }}
-#          status_value: 'Waiting for Engineering'
+          remove-labels: 'waiting-for-author, no-activity'
+          repo-token: ${{ secrets.ORG_AUTOMATION_TOKEN }}
+      - name: Move to waiting for engineering column
+        if: ${{ steps.checkUserMember.outputs.isTeamMember == 'false' }}
+        uses: leonsteinhaeuser/project-beta-automations@v2.0.0
+        with:
+          user: jnidzwetzki
+          project_id: 2
+          resource_node_id: ${{ github.event.issue.node_id }}
+          status_value: 'Waiting for Engineering'
