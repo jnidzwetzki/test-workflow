@@ -72,7 +72,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.ORG_AUTOMATION_TOKEN }}
       - name: Extract board column name
         id: extract_board_column
-        run: echo ${{ steps.get_board_column.outputs.data }} | jq '.repository.issue.projectV2.items.nodes[].fieldValueByName.name'
+        run: | 
+           echo ${{ steps.get_board_column.outputs.data }} | jq '.repository.issue.projectV2.items.nodes[].fieldValueByName.name'
       
       - run: "echo 'Board column: ${{ steps.extract_board_column.outputs.data }}'"
 #      - name: Check if organization member
