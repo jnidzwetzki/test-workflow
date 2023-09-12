@@ -59,6 +59,7 @@ jobs:
                 }
               }
             }
+        variables: |
           owner: jnidzwetzki
           repo: test-workflow
           project: 2
