@@ -44,7 +44,7 @@ jobs:
         id: get_board_column
         continue-on-error: true
         run: |
-          gh api graphql --paginate -F issue=$issue -F project=$project -F owner=$owner -F repo=$repo -f query='
+          gh api graphql --paginate -F issue=$ISSUE -F project=$PROJECT -F owner=$OWNER -F repo=$REPO -f query='
             query board_column($issue: Int!, $project: Int!, $owner: String!, $repo: String!, $endCursor: String) {
               repository(owner: $owner, name: $repo) {
                 issue(number: $issue) {
@@ -81,13 +81,13 @@ jobs:
             }
             ' > api_result
             cat api_result
-            cat api_result | jq ".data.repository.issue.projectV2.items.nodes[] | select (.content.number == $issue and .content.repository.name == \"$repo\" and .content.repository.owner.login == \"$owner\") | .fieldValueByName.name"
+            cat api_result | jq -r ".data.repository.issue.projectV2.items.nodes[] | select (.content.number == $ISSUE and .content.repository.name == \"$REPO\" and .content.repository.owner.login == \"$OWNER\") | .fieldValueByName.name"
 
         env:
-          owner: jnidzwetzki
-          repo: ${{ github.event.repository.name }}
-          project: 2
-          issue: ${{ github.event.issue.number }}
+          OWNER: jnidzwetzki
+          REPO: ${{ github.event.repository.name }}
+          PROJECT: 2
+          ISSUE: ${{ github.event.issue.number }}
           GITHUB_TOKEN: ${{ secrets.ORG_AUTOMATION_TOKEN }}
       - name: Extract board column name
         id: extract_board_column
