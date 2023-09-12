@@ -43,6 +43,7 @@ jobs:
       - name: Get board column of issue
         uses: octokit/graphql-action@v2.x
         id: get_board_column
+        continue-on-error: true
         with:
           query: |
             query board_column($issue:Int!,$project:Int!,$owner:String!,$repo:String!)  {
