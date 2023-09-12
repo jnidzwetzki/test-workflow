@@ -83,13 +83,11 @@ jobs:
             cat api_result
             cat api_result | jq ".data.repository.issue.projectV2.items.nodes[] | select (.content.number == $issue and .content.repository.name == "workflow-test" and .content.repository.owner.login == "jnidzwetzki") | .fieldValueByName.name"
 
-          variables: |
-            owner: jnidzwetzki
-            repo: ${{ github.event.repository.name }}
-            project: 2
-            issue: ${{ github.event.issue.number }}
-          
-        env:
+        env: |
+          owner: jnidzwetzki
+          repo: ${{ github.event.repository.name }}
+          project: 2
+          issue: ${{ github.event.issue.number }}
           GITHUB_TOKEN: ${{ secrets.ORG_AUTOMATION_TOKEN }}
       - name: Extract board column name
         id: extract_board_column
