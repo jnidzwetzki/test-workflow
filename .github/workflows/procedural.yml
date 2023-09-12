@@ -36,6 +36,10 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event_name == 'issue_comment' && !github.event.issue.pull_request
     steps:
+      - name: Install dependencies
+        run: |
+           sudo apt-get update
+           sudo apt-get install jq
       - name: Get board column of issue
         uses: octokit/graphql-action@v2.x
         id: get_board_column
@@ -68,9 +72,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.ORG_AUTOMATION_TOKEN }}
       - name: Extract board column name
         id: extract_board_column
-        run:  sudo apt-get update && \
-              sudo apt-get install jq && \
-              echo ${{ steps.get_board_column.outputs.data }} | jq '.repository.issue.projectV2.items.nodes[].fieldValueByName.name'
+        run: echo ${{ steps.get_board_column.outputs.data }} | jq '.repository.issue.projectV2.items.nodes[].fieldValueByName.name'
       
       - run: "echo 'Board column: ${{ steps.extract_board_column.outputs.data }}'"
 #      - name: Check if organization member
