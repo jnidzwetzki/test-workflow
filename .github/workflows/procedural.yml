@@ -59,10 +59,10 @@ jobs:
                 }
               }
             }
-          owner: ${{ github.event.repository.owner.name }}
-          repo: ${{ github.event.repository.name }}
+          owner: jnidzwetzki
+          repo: test-workflow
           project: 2
-          issue: ${{ github.event.issue.number}}
+          issue: ${{ github.event.issue.number }}
           
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
