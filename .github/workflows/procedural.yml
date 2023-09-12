@@ -41,7 +41,7 @@ jobs:
            sudo apt-get update
            sudo apt-get install jq
       - name: Get board column of issue
-        id: get_board_column
+        id: extract_board_column
         continue-on-error: true
         run: |
           gh api graphql --paginate -F issue=$ISSUE -F project=$PROJECT -F owner=$OWNER -F repo=$REPO -f query='
