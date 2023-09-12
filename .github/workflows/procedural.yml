@@ -49,7 +49,6 @@ jobs:
                       nodes {
                         fieldValueByName(name: "Status") {
                           ... on ProjectV2ItemFieldSingleSelectValue {
-                            id
                             name
                           }
                         }
