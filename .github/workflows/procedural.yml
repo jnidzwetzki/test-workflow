@@ -83,7 +83,7 @@ jobs:
          username: ${{ github.actor }}
          organization: bboxdb
          team: 'test-team'
-         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+         GITHUB_TOKEN: ${{ secrets.ORG_AUTOMATION_TOKEN }}
       - name: Remove waiting-for-author label
         if: ${{ steps.checkUserMember.outputs.isTeamMember == 'false' && steps.extract_board_column.outputs.issue_board_column == 'Waiting for Author' }}
         uses: andymckay/labeler@3a4296e9dcdf9576b0456050db78cfd34853f260
