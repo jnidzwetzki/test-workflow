@@ -80,7 +80,9 @@ jobs:
               }
             }
             ' > api_result
-            bord_column=$(cat api_result | jq -r ".data.repository.issue.projectV2.items.nodes[] | select (.content.number == $ISSUE and .content.repository.name == \"$REPO\" and .content.repository.owner.login == \"$OWNER\") | .fieldValueByName.name")
+            bord_column=$(cat api_result | jq -r ".data.repository.issue.projectV2.items.nodes[] | \ 
+                select (.content.number == $ISSUE and .content.repository.name == \"$REPO\" and .content.repository.owner.login == \"$OWNER\") | \
+                .fieldValueByName.name")
             echo "Issue is in column $bord_column"
             echo "issue_board_column=$bord_column" >> "$GITHUB_OUTPUT"   
         env:
