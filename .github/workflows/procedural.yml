@@ -81,7 +81,7 @@ jobs:
             }
             ' > api_result
             cat api_result
-            cat api_result | jq ".data.repository.issue.projectV2.items.nodes[] | select (.content.number == $issue and .content.repository.name == "workflow-test" and .content.repository.owner.login == "jnidzwetzki") | .fieldValueByName.name"
+            cat api_result | jq ".data.repository.issue.projectV2.items.nodes[] | select (.content.number == $issue and .content.repository.name == \"$repo\" and .content.repository.owner.login == \"$owner\") | .fieldValueByName.name"
 
         env:
           owner: jnidzwetzki
