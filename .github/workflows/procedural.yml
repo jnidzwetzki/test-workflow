@@ -83,7 +83,7 @@ jobs:
             cat api_result
             cat api_result | jq ".data.repository.issue.projectV2.items.nodes[] | select (.content.number == $issue and .content.repository.name == "workflow-test" and .content.repository.owner.login == "jnidzwetzki") | .fieldValueByName.name"
 
-        env: |
+        env:
           owner: jnidzwetzki
           repo: ${{ github.event.repository.name }}
           project: 2
