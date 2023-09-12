@@ -36,9 +36,9 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event_name == 'issue_comment' && !github.event.issue.pull_request
     steps:
-      - name: Check for board column
+      - name: Get board column of issue
         uses: octokit/graphql-action@v2.x
-        id: board_column
+        id: get_board_column
         with:
           query: |
             query board_column($issue:Int!,$project:Int!,$owner:String!,$repo:String!)  {
@@ -66,7 +66,11 @@ jobs:
           
         env:
           GITHUB_TOKEN: ${{ secrets.ORG_AUTOMATION_TOKEN }}
-      - run: "echo 'latest release: ${{ steps.board_column.outputs.data }}'"
+      - name: Extract board column name
+        id: extract_board_column
+        run:  echo ${{ steps.get_board_column.outputs.data }} | jq '.repository.issue.projectV2.items.nodes[].fieldValueByName.name'
+      
+      - run: "echo 'Board column: ${{ steps.extract_board_column.outputs.data }}'"
 #      - name: Check if organization member
 #        uses: tspascoal/get-user-teams-membership@v2
 #        id: checkUserMember
