@@ -25,7 +25,7 @@ jobs:
     steps:
       - uses: leonsteinhaeuser/project-beta-automations@v2.0.0
         with:
-          gh_token: ${{ secrets.GITHUB_TOKEN }}
+          gh_token: ${{ secrets.ORG_AUTOMATION_TOKEN }}
           user: jnidzwetzki
           # organization: sample-org
           project_id: 2
@@ -66,7 +66,7 @@ jobs:
             issue: ${{ github.event.issue.number }}
           
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.ORG_AUTOMATION_TOKEN }}
       - run: "echo 'latest release: ${{ steps.board_column.outputs.data }}'"
 #      - name: Check if organization member
 #        uses: tspascoal/get-user-teams-membership@v2
