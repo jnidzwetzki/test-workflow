@@ -65,7 +65,7 @@ jobs:
             }
           variables: |
             owner: jnidzwetzki
-            repo: test-workflow
+            repo: ${{ github.event.repository.name }}
             project: 2
             issue: ${{ github.event.issue.number }}
           
