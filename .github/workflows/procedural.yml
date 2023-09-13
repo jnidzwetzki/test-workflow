@@ -44,6 +44,7 @@ jobs:
         id: extract_board_column
         continue-on-error: true
         run: |
+          # Request all issues from project (server-side filtering is not supported bit GitHub yet)
           gh api graphql --paginate -F issue=$ISSUE -F project=$PROJECT -F owner=$OWNER -F repo=$REPO -f query='
             query board_column($issue: Int!, $project: Int!, $owner: String!, $repo: String!, $endCursor: String) {
               repository(owner: $owner, name: $repo) {
@@ -80,6 +81,7 @@ jobs:
               }
             }
             ' > api_result
+            # Get board column for issue
             board_column=$(cat api_result | jq -r ".data.repository.issue.projectV2.items.nodes[] |
                 select (.content.number == $ISSUE and .content.repository.name == \"$REPO\" and .content.repository.owner.login == \"$OWNER\") |
                 .fieldValueByName.name")
