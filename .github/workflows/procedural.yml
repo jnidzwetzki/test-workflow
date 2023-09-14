@@ -44,7 +44,13 @@ jobs:
         id: extract_board_column
         continue-on-error: true
         run: |
-          # Request all issues from project (server-side filtering is not supported bit GitHub yet)
+          # The following GraphQL query requests all issues from a project. It uses the repository
+          # to locate the issue and get the reference to the project. Then, a filter is applied
+          # (number: $project) to get the reference to the desired project (i.e., the bug board).
+          # Now, all issues from this project are requested. The reason for fetching all issues is
+          # because the current implementation of the GitHub GraphQL API for projects does not
+          # support server-side filters for issues and we can not restrict the query to our issue.
+          # Therefore, we fetch all issues and apply a filter on the client side in the next step.
           gh api graphql --paginate -F issue=$ISSUE -F project=$PROJECT -F owner=$OWNER -F repo=$REPO -f query='
             query board_column($issue: Int!, $project: Int!, $owner: String!, $repo: String!, $endCursor: String) {
               repository(owner: $owner, name: $repo) {
@@ -82,11 +88,11 @@ jobs:
             }
             ' > api_result
             # Get board column for issue
-            board_column=$(cat api_result | jq -r ".data.repository.issue.projectV2.items.nodes[] |
+            board_column=$(jq -r ".data.repository.issue.projectV2.items.nodes[] |
                 select (.content.number == $ISSUE and .content.repository.name == \"$REPO\" and .content.repository.owner.login == \"$OWNER\") |
-                .fieldValueByName.name")
-            echo "Issue is in column $board_column"
-            echo "issue_board_column=$board_column" >> "$GITHUB_OUTPUT"   
+                .fieldValueByName.name" api_result)
+            echo "Issue is in column: $board_column"
+            echo "issue_board_column=$board_column" >> "$GITHUB_OUTPUT"
         env:
           OWNER: jnidzwetzki
           REPO: ${{ github.event.repository.name }}
