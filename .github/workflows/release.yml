@@ -1,0 +1,16 @@
+name: "Build distribution packages"
+
+"on":
+  release:
+    types: [released]
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+        - name: Build distribution packages
+          env:
+            GH_TOKEN: ${{ secrets.ORG_AUTOMATION_TOKEN }}
+          run: |
+            echo "Test"
