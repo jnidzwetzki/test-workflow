@@ -4,15 +4,15 @@ on:
 
 jobs:
   stale:
-    strategy:
-      fail-fast: false
     runs-on: ubuntu-latest
     steps:
       - name: Step 1
+        if: success() || failure()
         run: |
           echo "Step 1"
           exit 1
       - name: Step 2
+        if: success() || failure()
         run: |
           echo "Step 2"
           exit 0
