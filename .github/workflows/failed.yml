@@ -1,0 +1,14 @@
+name: 'Test failing steps'
+on:
+  workflow_dispatch:
+
+jobs:
+  stale:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Step 1
+        run: |
+          exit 1
+      - name: Step 2
+        run: |
+          exit 0
