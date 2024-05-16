@@ -4,7 +4,7 @@ on:
 
 jobs:
   stale:
-    continue-on-error: true
+    fail-fast: false
     runs-on: ubuntu-latest
     steps:
       - name: Step 1
